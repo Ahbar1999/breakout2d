@@ -12,9 +12,9 @@ void SpriteRenderer::initRenderData()
 	unsigned int VBO;
     float vertices[] = {
         // pos      // tex
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 1.0f, // first four attributes (position coordinates, texture coordinates)
+        1.0f, 0.0f, 1.0f, 0.0f, // next four
+        0.0f, 0.0f, 0.0f, 0.0f, // and so ..on
 
         0.0f, 1.0f, 0.0f, 1.0f,
         1.0f, 1.0f, 1.0f, 1.0f,
@@ -22,24 +22,24 @@ void SpriteRenderer::initRenderData()
     };
 
     glGenVertexArrays(1, &this->quadVAO);
+    glBindVertexArray(this->quadVAO);
+    
     glGenBuffers(1, &VBO);
-
+    // bind VBO buffer to GL_ARRAY_BUFFER
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    // transfer data to the bound(VBO) using the currently bound GL_ARRAY_BUFFER 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
-    glBindVertexArray(this->quadVAO);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     
-    //unbind
+    //unbind current VBO and VAO 
     glBindBuffer(GL_VERTEX_ARRAY, 0);
     glBindVertexArray(0);
+    // no we can always use this->quadVAO to refer to this object's data 
 }
 
-void SpriteRenderer::DrawSprite(const Texture2D& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color)
-{
-
-
+void SpriteRenderer::DrawSprite(const Texture2D& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
     //prepare transformation
     this->shader.Use();
     

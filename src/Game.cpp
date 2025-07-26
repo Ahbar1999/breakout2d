@@ -75,10 +75,8 @@ void Game::Init()
 
 }
 
-void Game::Render()
-{
-	if (this->State == GAME_ACTIVE)
-	{
+void Game::Render() {
+	if (this->State == GAME_ACTIVE) {
 		//draw background
 		Renderer->DrawSprite(ResourceManager::getTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
 	}

@@ -14,17 +14,12 @@ link_directories(${CMAKE_SOURCE_DIR}/../libs/)
 # the .c extension is just for glad.c file 
 file(GLOB SOURCES "${CMAKE_SOURCE_DIR}/*.cpp" "${CMAKE_SOURCE_DIR}/*.c")
 
-# set(SOURCES
-#     program.cpp 
-#     glad.cpp
-# )
-
 add_executable(main MACOSX_BUNDLE ${SOURCES})
 
 # glm is header only lib so we only add glfw3
 target_link_libraries(main
     glfw3    # Use 'glfw' or 'glfw3' based on your built lib name
-    "-framework OpenGL"
+    "-framework OpenGL" # following lines are apple's platform dependent stuff, dont worry about it kitten :)
     "-framework Cocoa"
     "-framework CoreFoundation"
     "-framework IOKit"
